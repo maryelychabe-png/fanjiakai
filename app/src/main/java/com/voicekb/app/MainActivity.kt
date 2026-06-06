@@ -153,6 +153,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun sendAsk(textQuery: String?, audio: File?) {
         if (asking) return
+        // 直接采用地址栏/令牌栏的当前值（避免还没失焦没存进去）
+        serverUrl = b.server.text.toString()
+        token = b.tokenInput.text.toString()
         val base = serverUrl
         if (base.isEmpty()) { toast("请先填写服务器地址"); return }
         asking = true

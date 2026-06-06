@@ -9,7 +9,13 @@ object Prefs {
 
     var Context.serverUrl: String
         get() = sp(this).getString("server", "")?.trim().orEmpty()
-        set(v) { sp(this).edit().putString("server", v.trim().trimEnd('/')).apply() }
+        set(v) {
+            var s = v.trim().trimEnd('/')
+            // 没写协议就补 http://，避免被当成 https:443
+            if (s.isNotEmpty() && !s.startsWith("http://") && !s.startsWith("https://"))
+                s = "http://$s"
+            sp(this).edit().putString("server", s).apply()
+        }
 
     var Context.token: String
         get() = sp(this).getString("token", "").orEmpty()
