@@ -50,6 +50,7 @@ class RecorderService : Service() {
     }
 
     private var job: Job? = null
+    @Volatile private var running = false
     private var uploaderStarted = false
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private var wakeLock: PowerManager.WakeLock? = null
@@ -110,12 +111,13 @@ class RecorderService : Service() {
         var segSec = 0.0
         val frameSec = FRAME.toDouble() / SAMPLE_RATE
 
+        running = true
         try {
-            while (coroutineContext.isActive) {
+            while (running) {
                 val n = recorder.read(frame, 0, FRAME)
                 if (n <= 0) continue
                 val rms = rms(frame, n)
-                broadcastAmp((rms / 4000f).coerceIn(0f, 1f))
+                broadcastAmp((rms.toFloat() / 4000f).coerceIn(0f, 1f))
 
                 val gain = sensitivity.coerceIn(0.2f, 3f)
                 val threshold = 1200f / gain                // 灵敏度越高，阈值越低
@@ -214,6 +216,7 @@ class RecorderService : Service() {
 
     override fun onDestroy() {
         broadcastState("已停止")
+        running = false
         job?.cancel(); scope.cancel()
         wakeLock?.let { if (it.isHeld) it.release() }
         super.onDestroy()
