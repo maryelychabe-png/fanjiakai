@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1F2430"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#1F6F86"
+            android:padding="20dp"
+            android:text="@string/app_name"
+            android:textColor="#FFFFFF"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <!-- 录音卡片 -->
+        <LinearLayout style="@style/Card">
+            <TextView
+                android:id="@+id/recStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="待机"
+                android:textColor="#E6E9EF"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:paddingBottom="12dp" />
+
+            <com.voicekb.app.WaveView
+                android:id="@+id/wave"
+                android:layout_width="match_parent"
+                android:layout_height="54dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="14dp">
+                <Button
+                    android:id="@+id/startBtn"
+                    style="@style/Pill"
+                    android:text="▶ 开始聆听" />
+                <Button
+                    android:id="@+id/stopBtn"
+                    style="@style/Pill"
+                    android:layout_marginStart="12dp"
+                    android:backgroundTint="#2B3140"
+                    android:textColor="#FF5A5A"
+                    android:text="■ 停止聆听" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 提问卡片 -->
+        <LinearLayout style="@style/Card">
+            <EditText
+                android:id="@+id/q"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:gravity="top"
+                android:background="@null"
+                android:hint="手动输入问题"
+                android:textColorHint="#9AA3B2"
+                android:textColor="#E6E9EF"
+                android:textSize="18sp"
+                android:inputType="textMultiLine" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10dp">
+                <Button
+                    android:id="@+id/askVoiceBtn"
+                    style="@style/Pill"
+                    android:backgroundTint="#4A4566"
+                    android:text="🎤 语音" />
+                <Button
+                    android:id="@+id/sendBtn"
+                    style="@style/Pill"
+                    android:layout_marginStart="12dp"
+                    android:backgroundTint="#5EC6F7"
+                    android:textColor="#08202C"
+                    android:text="➤ 发送" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 设置卡片 -->
+        <LinearLayout style="@style/Card">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView style="@style/Lbl" android:text="麦克风灵敏度" />
+                <TextView android:id="@+id/gainVal" style="@style/Lbl"
+                    android:layout_marginStart="8dp" android:text="1.0" />
+            </LinearLayout>
+            <com.google.android.material.slider.Slider
+                android:id="@+id/gain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:valueFrom="0.2"
+                android:valueTo="3.0"
+                android:stepSize="0.1"
+                android:value="1.0" />
+
+            <TextView style="@style/Lbl" android:text="服务器地址（如 http://100.x.x.x:842）"
+                android:paddingTop="8dp" />
+            <EditText
+                android:id="@+id/server"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/field_bg"
+                android:padding="10dp"
+                android:textColor="#E6E9EF"
+                android:textColorHint="#9AA3B2"
+                android:hint="http://家里电脑IP:842"
+                android:inputType="textUri" />
+
+            <TextView style="@style/Lbl" android:text="访问令牌（服务器没设就留空）"
+                android:paddingTop="8dp" />
+            <EditText
+                android:id="@+id/tokenInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/field_bg"
+                android:padding="10dp"
+                android:textColor="#E6E9EF"
+                android:textColorHint="#9AA3B2"
+                android:hint="可留空"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <!-- 答案卡片 -->
+        <LinearLayout
+            android:id="@+id/answerCard"
+            style="@style/Card"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#E6E9EF"
+                android:textSize="15sp"
+                android:lineSpacingMultiplier="1.3" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
